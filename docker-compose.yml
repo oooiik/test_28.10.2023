@@ -1,0 +1,57 @@
+version: "3.8"
+services:
+  nginx:
+    container_name: ${COMPOSE_PROJECT_NAME}_nginx
+    image: nginx:latest
+    working_dir: /app
+    volumes:
+      - ./laravel:/app
+      - ./docker/nginx/templates:/etc/nginx/templates
+    networks:
+      default:
+        ipv4_address: ${COMPOSE_PROJECT_NETWORK}.2
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    depends_on:
+      - php-fpm
+
+  mysql:
+    container_name: "${COMPOSE_PROJECT_NAME}_mysql"
+    image: mysql:8.1
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./docker/mysql/dump:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dev
+      MYSQL_USER: my
+      MYSQL_PASSWORD: my
+    networks:
+      default:
+        ipv4_address: "${COMPOSE_PROJECT_NETWORK}.3"
+
+  php-fpm:
+    container_name: ${COMPOSE_PROJECT_NAME}_php-fpm
+    image: oooiik/php:8.2-fpm-laravel # my own image https://github.com/oooiik/docker_php-fpm-laravel
+    volumes:
+      - ./laravel:/app
+      - ./docker/php-fpm/php.ini:/usr/local/etc/php/php.ini
+      - ./docker/php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    networks:
+      default:
+        ipv4_address: ${COMPOSE_PROJECT_NETWORK}.4
+    depends_on:
+      - mysql
+
+volumes:
+  mysql:
+    driver: local
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: ${COMPOSE_PROJECT_NETWORK}.0/16
+          gateway: ${COMPOSE_PROJECT_NETWORK}.1
