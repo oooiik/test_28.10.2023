@@ -1,0 +1,17 @@
+-- create databases
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `dev` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `test` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `pre_prod` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `prod` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+
+-- add permissions for the user
+
+GRANT ALL PRIVILEGES ON dev.* TO 'my'@'%';
+GRANT ALL PRIVILEGES ON test.* TO 'my'@'%';
+GRANT ALL PRIVILEGES ON pre_prod.* TO 'my'@'%';
+GRANT ALL PRIVILEGES ON prod.* TO 'my'@'%';
+
+-- flush the privileges
+
+FLUSH PRIVILEGES;
