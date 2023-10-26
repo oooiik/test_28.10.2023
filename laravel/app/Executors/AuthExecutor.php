@@ -16,7 +16,7 @@ class AuthExecutor
             return false;
         }
         return [
-            'token' => $token,
+            'token' => auth()->user()->createToken('auth_token')->plainTextToken,
             'user' => auth()->user()
         ];
     }
@@ -62,6 +62,12 @@ class AuthExecutor
     public function resetPassword(array $validated): bool
     {
         // TODO reset password
+        return true;
+    }
+
+    public function verifyEmail(array $validated): bool
+    {
+        // TODO verify email
         return true;
     }
 }

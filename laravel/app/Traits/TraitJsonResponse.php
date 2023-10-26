@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 trait TraitJsonResponse
 {
-    protected function responseSuccess($data, $message = null, $code = 200): JsonResponse
+    protected function responseSuccess($message = null, $data = null, $code = 200): JsonResponse
     {
         return response()->json([
             'success' => true,

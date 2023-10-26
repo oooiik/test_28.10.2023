@@ -24,6 +24,8 @@ Route::group([
     Route::post('me', [\App\Http\Controllers\AuthController::class, 'me'])
         ->middleware('auth:sanctum')->name('me');
     Route::post('register', [\App\Http\Controllers\AuthController::class, 'register'])->name('register');
+    Route::post('verify-email', [\App\Http\Controllers\AuthController::class, 'verifyEmail'])
+        ->name('verifyEmail');
     Route::post('forgot-password', [\App\Http\Controllers\AuthController::class, 'forgotPassword'])
         ->name('forgotPassword');
     Route::post('reset-password', [\App\Http\Controllers\AuthController::class, 'resetPassword']);
