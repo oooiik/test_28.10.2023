@@ -67,9 +67,12 @@ class AuthExecutor
         return true;
     }
 
-    public function verifyEmail(array $validated): bool
+    public function verifyEmail(User $user, string $hash): bool
     {
-        // TODO verify email
+        if (!hash_equals(sha1($user->getEmailForVerification()), $hash)) {
+            return false;
+        }
+        $user->markEmailAsVerified();
         return true;
     }
 }

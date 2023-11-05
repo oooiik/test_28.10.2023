@@ -8,6 +8,7 @@ use App\Http\Requests\Auth\AuthLoginRequest;
 use App\Http\Requests\Auth\AuthRegisterRequest;
 use App\Http\Requests\Auth\AuthResetPasswordRequest;
 use App\Http\Requests\Auth\AuthVerifyEmailRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -58,7 +59,9 @@ class AuthController extends Controller
 
     public function verifyEmail(Request $request)
     {
-        $result = $this->executor->verifyEmail($request->route()->parameters());
+        $user = User::findOrFail($request->route('id'));
+        $hash = $request->route('hash');
+        $result = $this->executor->verifyEmail($user, $hash);
         if (!$result) return view('auth.not-verified-email');
         return view('auth.verified-email');
     }
