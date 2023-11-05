@@ -7,7 +7,6 @@ use App\Http\Requests\Auth\AuthForgotPasswordRequest;
 use App\Http\Requests\Auth\AuthLoginRequest;
 use App\Http\Requests\Auth\AuthRegisterRequest;
 use App\Http\Requests\Auth\AuthResetPasswordRequest;
-use App\Http\Requests\Auth\AuthVerifyEmailRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
