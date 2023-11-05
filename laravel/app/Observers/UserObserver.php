@@ -12,7 +12,9 @@ class UserObserver
      */
     public function created(User $user): void
     {
-        event(new Registered($user));
+        if (!app()->runningInConsole()) {
+            event(new Registered($user));
+        }
     }
 
     /**

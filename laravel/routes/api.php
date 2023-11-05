@@ -30,4 +30,5 @@ Route::group([
 });
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('articles', \App\Http\Controllers\ArticleController::class);
 });

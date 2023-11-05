@@ -18,11 +18,3 @@ Route::get('/email/verify', function () {
 })->middleware('auth')->name('verification.notice');
 
 Route::get('/email/verify/{id}/{hash}', [\App\Http\Controllers\AuthController::class, 'verifyEmail'])->middleware(['signed'])->name('verification.verify');
-
-Route::post('/login', function () {
-    return redirect()->route('any');
-})->name('login');
-
-Route::get('/{any}', function () {
-    return "api.docs";
-})->where('any', '.*')->name('any');
