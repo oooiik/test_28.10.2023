@@ -14,6 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'prefix'=>'auth',
+    'as' => 'auth.',
+], function (){
+    Route::post('login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
+    Route::post('logout', [\App\Http\Controllers\AuthController::class, 'logout'])
+        ->middleware('auth:sanctum')->name('logout');
+    Route::post('me', [\App\Http\Controllers\AuthController::class, 'me'])
+        ->middleware('auth:sanctum')->name('me');
+    Route::post('register', [\App\Http\Controllers\AuthController::class, 'register'])->name('register');
+    Route::post('forgot-password', [\App\Http\Controllers\AuthController::class, 'forgotPassword'])
+        ->name('forgotPassword');
+    Route::post('reset-password', [\App\Http\Controllers\AuthController::class, 'resetPassword']);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('articles', \App\Http\Controllers\ArticleController::class);
 });
