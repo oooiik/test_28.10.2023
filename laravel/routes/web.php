@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
@@ -27,8 +23,10 @@ Route::get('/email/verify/{id}/{hash}', function (\Illuminate\Foundation\Auth\Em
     return redirect('/');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
-Route::post('/email/verification-notification', function (\Illuminate\Support\Facades\Request $request) {
-    $request->user()->sendEmailVerificationNotification();
+Route::post('/login', function () {
+    return redirect()->route('any');
+})->name('login');
 
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+Route::get('/{any}', function () {
+    return "api.docs";
+})->where('any', '.*')->name('any');

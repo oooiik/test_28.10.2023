@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\AuthForgotPasswordRequest;
 use App\Http\Requests\Auth\AuthLoginRequest;
 use App\Http\Requests\Auth\AuthRegisterRequest;
 use App\Http\Requests\Auth\AuthResetPasswordRequest;
+use App\Http\Requests\Auth\AuthVerifyEmailRequest;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -57,8 +58,8 @@ class AuthController extends Controller
 
     public function verifyEmail(Request $request)
     {
-        $result = $this->executor->verifyEmail($request->all());
-        if (!$result) return $this->responseUnauthorized('Invalid credentials');
-        return $this->responseSuccess('Email verified successfully', $result);
+        $result = $this->executor->verifyEmail($request->route()->parameters());
+        if (!$result) return view('auth.not-verified-email');
+        return view('auth.verified-email');
     }
 }

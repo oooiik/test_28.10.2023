@@ -2,10 +2,12 @@
 
 namespace App\Executors;
 
+use App\Mail\User\VerifyEmailMail;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthExecutor
 {

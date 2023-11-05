@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Listeners\User\LogVerifiedUser;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -9,6 +10,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
+
 {
     /**
      * The event to listener mappings for the application.
@@ -16,8 +18,11 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        \App\Events\User\UserRegisteredEvent::class => [
-            \App\Listeners\User\SendVerifyEmailListener::class
+        Registered::class => [
+            SendEmailVerificationNotification::class,
+        ],
+        Verified::class => [
+            LogVerifiedUser::class,
         ],
     ];
 

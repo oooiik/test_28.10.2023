@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Events\User\UserRegisteredEvent;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 
@@ -13,7 +12,7 @@ class UserObserver
      */
     public function created(User $user): void
     {
-        event(new UserRegisteredEvent($user));
+        event(new Registered($user));
     }
 
     /**
